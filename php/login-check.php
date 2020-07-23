@@ -1,15 +1,20 @@
 <?php
 	//display php errors
-	ini_set('display_errors', 1);
+	//ini_set('display_errors', 1);
 
 	require 'DBCredentials.php';
+//	**The mySQL fields need to be filled out below or as I have done create a new php file with the fields filled in below to connect to the mySQL server**
+//	DEFINE('DB_USERNAME', 'username');
+//	DEFINE('DB_PASSWORD', 'password');
+//	DEFINE('DB_HOST', 'ip_mySQL_server');
+//	DEFINE('DB_DATABASE', 'your_db_name');
 
 	$mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 	if (mysqli_connect_error()) {
 		die('Connect Error ('.mysqli_connect_errno().') '.mysqli_connect_error());
 	}
-	//echo 'Connected successfully.';
+	
 	//Creating table if doesnt exist
 	$sql = "CREATE TABLE IF NOT EXISTS users (
 	userID integer not null primary key auto_increment,
@@ -22,6 +27,7 @@
 	
 	$ok = true;
 	$messages = array();
+	
 	
 	//Retrieve post variables
 	$username = isset($_POST['username']) ? $mysqli->real_escape_string($_POST['username']) : '';
@@ -64,9 +70,6 @@
 		//Search db for username and then match the password
 		$sql = "SELECT * FROM `users` WHERE `username` = '".$username."'";
 		$result = $mysqli->query($sql);
-		//$messages[] = $mysqli->real_escape_string($username);
-		//$messages[] = $sql;
-		//$messages[] = $result;
 		
 		$ok = false;
 		if($result){
