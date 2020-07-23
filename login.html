@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Tiger Tunnel Login</title>
+		<link rel="stylesheet" href="css/login.css">
+	</head>
+	<body>
+		<div class="login-form">
+			<div class="login-form__logo-container">
+				<span class="container">
+					<img class="login-form__logo" src="assets/tiger-tunnel-logo.png">
+				</span>
+				<span class="container">
+					<div class="vertical-center">
+						<span id="form-title">Tiger Tunnel<span>
+					</div>
+				</span>
+			</div>
+			<div class="login-form__content">
+				<div class="login-form__header" id="dc_header">Login to your account</div>
+				<input class="login-form__input" type="text" id="dc_username" placeholder="Username" spellcheck="false">
+				<input class="login-form__input" type="password" id="dc_password" placeholder="Password">
+				<input class="login-form__input" type="password" id="dc_password2" placeholder="Reenter Password" style="display: none">
+				<button class="login-form__button" type="submit" id="dc_login">Login</button>
+				<ul id="form-messages">
+				</ul>
+				<div class="login-form__links">
+					<a href="login.html" class="login-form__link">Forgot your password?</a><br />
+					<button class="login-form__register-button" type="button" id="dc_register">Register</a>
+				</div>
+			</div>
+		</div>
+		<script>
+			var registerFlag = false;		
+		
+			const form = {
+				header: document.getElementById("dc_header"),
+				username: document.getElementById("dc_username"),
+				password: document.getElementById("dc_password"),
+				password2: document.getElementById("dc_password2"),
+				submit: document.getElementById("dc_login"),
+				messages: document.getElementById("form-messages"),
+				register: document.getElementById("dc_register")
+			};
+			
+			form.register.addEventListener('click', () => {
+				if(!registerFlag){
+					//We reviel extra password field, change Login to Register, hide Register Button set RegisterFlag
+					form.header.innerHTML = "Register for an account";
+					form.password2.style.display = "block";
+					form.submit.innerHTML = "Register";
+					form.register.innerHTML = "Login Page";
+					registerFlag = true;
+				}else{
+					form.header.innerHTML = "Login to your account";
+					form.password2.style.display = "none";
+					form.submit.innerHTML = "Login";
+					form.register.innerHTML = "Register";
+					registerFlag = false;
+				}
+			});
+			
+			form.submit.addEventListener('click', () => {
+				const request = new XMLHttpRequest();
+				
+				request.onload = () => {
+					let responseObject = null;
+					
+					try {
+						responseObject = JSON.parse(request.responseText);
+					}catch (e){
+						console.error('Could not parse JSON! '+e);
+					}
+					
+					if(responseObject){
+						handleResponse(responseObject);
+					}
+				}
+				
+				const requestData = `username=${form.username.value}&password=${form.password.value}&password2=${form.password2.value}&registerFlag=${registerFlag}`;
+				console.log(requestData);
+				
+				request.open('post', 'php/login-check.php');
+				request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				request.send(requestData);
+			});
+			
+			function handleResponse(responseObject){
+				if(responseObject.ok){
+					location.href = 'dashboard.html?username='+responseObject.username;
+				}else{
+					while (form.messages.firstChild){
+						form.messages.removeChild(form.messages.firstChild);
+					}
+					
+					responseObject.messages.forEach((message) => {
+						const li = document.createElement('li');
+						li.textContent = message;
+						form.messages.appendChild(li);
+					});
+					
+					form.messages.style.display = "block";
+				}
+			}
+		</script>
+	</body>
+</html>

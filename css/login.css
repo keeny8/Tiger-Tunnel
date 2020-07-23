@@ -1,0 +1,128 @@
+body {
+	background: #009578;
+	margin: 15px;
+	margin-top: 50px;
+}
+
+.login-form,
+.login-form * {
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+.login-form {
+	max-width: 350px;
+	margin: 0 auto;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+
+.login-form__logo-container {
+	padding: 15px 25px 15px 25px;
+	background: #170602;
+}
+
+.login-form__logo {
+	display: inline-block;
+	max-width: 125px;
+	margin: 0 auto;
+}
+
+#form-title {
+	color: white;
+	font-size: 18px;
+}
+
+.container {
+	height: 75px;
+	display: inline-block;
+	position: relative;
+	border: 3px solid green;
+	border-radius: 5px;
+}
+
+.vertical-center {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.login-form__content {
+	padding: 30px;
+	background: #eeeeee;
+}
+
+.login-form__header {
+	margin-bottom: 15px;
+	text-align: center;
+	color: #333333;
+}
+
+.login-form__input {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	border: 2px solid #dddddd;
+	background: white;
+	outline: none;
+	transition: border-color 0.5s;
+}
+
+.login-form__input:focus {
+	border-color: #009578;
+}
+
+.login-form__input::placeholder {
+	color: #aaaaaa;
+}
+
+.login-form__button {
+	padding: 10px;
+	color: white;
+	font-weight: bold;
+	background: #009578;
+	width: 100%;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.login-form__button:active {
+	background: #008067;
+}
+
+#form-messages {
+	background-color: rgb(255,232,232);
+	border: 1px solid red;
+	color: red;
+	display: none;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding: 10px 25px;
+}
+
+.login-form__links {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.login-form__link {
+	font-size: 0.9em;
+	color: #009578;
+	text-decoration: none;
+}
+
+.login-form__register-button {
+	margin-top: 10px;
+	border: none;
+	font-size: 0.9em;
+	color: #009578;
+	text-decoration: none;
+	background-color: transparent;
+}
